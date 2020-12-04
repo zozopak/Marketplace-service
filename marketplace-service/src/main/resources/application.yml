@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: MARKETPLACE
+    password: 12345
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+
+
+
+info:
+  Author:
+    name:zohreh
