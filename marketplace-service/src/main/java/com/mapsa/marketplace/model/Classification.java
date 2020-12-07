@@ -1,11 +1,14 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@ToString
 public class Classification {
     private long id;
     private long categoryId;

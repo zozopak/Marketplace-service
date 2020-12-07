@@ -1,9 +1,12 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@ToString
 public class Wallet {
     private long id;
     private long balance;

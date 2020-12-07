@@ -1,10 +1,13 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Collection;
 
 @Entity
+@ToString
 public class Orders {
     private long id;
     private String orderNumber;

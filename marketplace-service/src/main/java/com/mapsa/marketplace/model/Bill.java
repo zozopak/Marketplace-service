@@ -1,8 +1,11 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@ToString
 public class Bill {
     private long id;
     private String billNumber;
@@ -11,6 +14,19 @@ public class Bill {
     private long lockVersion;
     private Orders ordersByOrderId;
     private Payment paymentByPaymentId;
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", billNumber='" + billNumber + '\'' +
+                ", total='" + total + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", lockVersion=" + lockVersion +
+                ", ordersByOrderId=" + ordersByOrderId +
+                ", paymentByPaymentId=" + paymentByPaymentId +
+                '}';
+    }
 
     @Id
     @Column(name = "ID")

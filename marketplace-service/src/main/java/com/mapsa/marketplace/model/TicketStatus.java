@@ -1,10 +1,13 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Table(name = "TICKET_STATUS", schema = "MARKETPLACE")
+@ToString
 public class TicketStatus {
     private long id;
     private String status;

@@ -1,8 +1,11 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@ToString
 public class Lineitem {
     private long id;
     private String firstname;

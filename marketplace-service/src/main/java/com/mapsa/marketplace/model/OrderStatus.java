@@ -1,8 +1,11 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@ToString
 @Table(name = "ORDER_STATUS", schema = "MARKETPLACE")
 public class OrderStatus {
     private long id;

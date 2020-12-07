@@ -1,7 +1,11 @@
 package com.mapsa.marketplace.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonNullFormatVisitor;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.mapsa.marketplace.model.Category;
 import com.mapsa.marketplace.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +59,7 @@ public class CategoryController {
     }
 
 
-    @PatchMapping("/{id}")
+  /*  @PatchMapping("/{id}")
     public void updateCategory(@PathVariable long id, @RequestBody Category category) {
         Optional<Category> myCategory = categoryRepository.findById(id);
         Category c = myCategory.get();
@@ -67,7 +71,29 @@ public class CategoryController {
             c.setRemarks(category.getRemarks());
         categoryRepository.save(c);
     }
+*/
+  @PatchMapping(path="/{id}",consumes = "application/json-patch+json")
+  public ResponseEntity<Category> updateCategory(@PathVariable long id, @RequestBody JsonPatch patch){
+      try {
+          Category category = categoryRepository.findById(id).orElseThrow( NullPointerException::new);
 
+          Category categoryPatched = applyPatchToCategory(patch, category);
+
+          categoryRepository.save(categoryPatched);
+          return ResponseEntity.ok(categoryPatched);
+      }catch(JsonPatchException | JsonProcessingException e) {
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      }catch (NullPointerException e){
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      }
+  }
+
+    private Category applyPatchToCategory(JsonPatch patch, Category category) throws JsonPatchException, JsonProcessingException {
+        ObjectMapper objectMapper=new ObjectMapper();
+        JsonNode patched=patch.apply(objectMapper.convertValue(category,JsonNode.class));
+
+        return objectMapper.treeToValue(patched,Category.class);
+    }
 
 }
 

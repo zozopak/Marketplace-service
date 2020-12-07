@@ -1,6 +1,7 @@
 package com.mapsa.marketplace.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.ToString;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
+@ToString
 public class Category  {
     private long id;
     private String status;
@@ -78,4 +80,5 @@ public class Category  {
         result = 31 * result + (int) (lockVersion ^ (lockVersion >>> 32));
         return result;
     }
+
 }

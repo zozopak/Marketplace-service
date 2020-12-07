@@ -1,10 +1,17 @@
 package com.mapsa.marketplace.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
+import com.mapsa.marketplace.model.Orders;
 import com.mapsa.marketplace.model.Payment;
 import com.mapsa.marketplace.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,5 +50,25 @@ public class PaymentController {
     @GetMapping("/{id}")
     public Optional<Payment> getOne(@PathVariable long id){
         return paymentRepository.findById(id);
+    }
+
+    @PatchMapping(value = "/{id}",consumes = "application/json-patch+json")
+    public ResponseEntity<Payment> updatePayment(@PathVariable long id, JsonPatch patch){
+        try{
+           Payment payment=paymentRepository.findById(id).orElseThrow(NullPointerException::new);
+            Payment paymentPatched=applyPatchToPayment(patch,payment);
+            paymentRepository.save(paymentPatched);
+            return ResponseEntity.ok(paymentPatched);
+        }catch (JsonPatchException | JsonProcessingException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }catch (NullPointerException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    private Payment applyPatchToPayment(JsonPatch patch, Payment payment) throws JsonPatchException, JsonProcessingException {
+        ObjectMapper objectMapper=new ObjectMapper();
+        JsonNode patched=patch.apply(objectMapper.convertValue(payment,JsonNode.class));
+        return objectMapper.treeToValue(patched,Payment.class);
     }
 }

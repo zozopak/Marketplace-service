@@ -1,10 +1,13 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CART_LINEITEM", schema = "MARKETPLACE")
 @IdClass(CartLineitemPK.class)
+@ToString
 public class CartLineitem {
     private long cartId;
     private long lineitemId;

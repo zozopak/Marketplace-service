@@ -1,9 +1,12 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.sql.Time;
 
 @Entity
+@ToString
 public class Cart {
     private long id;
     private Time cartdate;
@@ -84,4 +87,6 @@ public class Cart {
     public void setCustomerByCustomerId(Customer customerByCustomerId) {
         this.customerByCustomerId = customerByCustomerId;
     }
+
+
 }

@@ -1,8 +1,12 @@
 package com.mapsa.marketplace.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "ADRESS")
+@ToString
 public class Address {
 
     private long id;
@@ -147,4 +151,7 @@ public class Address {
     public void setVendorByVendorId(Vendor vendorByVendorId) {
         this.vendorByVendorId = vendorByVendorId;
     }
+
+
+
 }
