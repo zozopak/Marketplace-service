@@ -16,8 +16,8 @@ import java.util.List;
 @Aspect
 @Component
 @Slf4j
-public class AspectOrganizer {
-    private final Logger LOGGER= LoggerFactory.getLogger("AspectOrganizer.class");
+public class AspectOrganizer1 {
+
    @AfterReturning(pointcut = "execution(* com.mapsa.marketplace.controller.*.get*(..))",returning = "result")
     public void getResult(JoinPoint joinPoint,Object result){
 
@@ -25,4 +25,7 @@ public class AspectOrganizer {
        System.out.println(result);
 
     }
+
+
+
 }
