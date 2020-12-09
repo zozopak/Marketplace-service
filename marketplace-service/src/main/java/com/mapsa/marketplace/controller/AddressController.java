@@ -45,7 +45,7 @@ public class AddressController {
         addressRepository.deleteById(id);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public Optional<Address> getOne(@PathVariable long id ){
         return addressRepository.findById(id);
     }
