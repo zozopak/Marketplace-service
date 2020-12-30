@@ -1,0 +1,17 @@
+server:
+  port: 8088
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          clone-on-start: true
+          uri: https://gitlab.com/zozopak7/myservice.git
+          username: zozopak7
+          password: pakdaman9420
+          force-pull: true
