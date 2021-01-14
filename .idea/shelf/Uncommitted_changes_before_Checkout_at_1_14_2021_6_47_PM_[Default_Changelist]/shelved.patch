@@ -1,0 +1,36 @@
+Index: marketplace-service/src/main/java/com/mapsa/marketplace/MarketplaceServiceApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.mapsa.marketplace;\r\n\r\nimport org.springframework.boot.SpringApplication;\r\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\r\nimport org.springframework.context.annotation.EnableAspectJAutoProxy;\r\n\r\n@SpringBootApplication\r\n@EnableAspectJAutoProxy\r\npublic class MarketplaceServiceApplication {\r\n    // TODO: 11/27/2020  @ResponseStatus/Database Tables & relations/spring validations\r\n\r\n    public static void main(String[] args) {\r\n        SpringApplication.run(MarketplaceServiceApplication.class, args);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/marketplace-service/src/main/java/com/mapsa/marketplace/MarketplaceServiceApplication.java b/marketplace-service/src/main/java/com/mapsa/marketplace/MarketplaceServiceApplication.java
+--- a/marketplace-service/src/main/java/com/mapsa/marketplace/MarketplaceServiceApplication.java	(revision c5d3c8ddb3975cf27cf13478e7ad54a4368b92b4)
++++ b/marketplace-service/src/main/java/com/mapsa/marketplace/MarketplaceServiceApplication.java	(date 1610637419115)
+@@ -6,11 +6,24 @@
+ 
+ @SpringBootApplication
+ @EnableAspectJAutoProxy
++
+ public class MarketplaceServiceApplication {
+     // TODO: 11/27/2020  @ResponseStatus/Database Tables & relations/spring validations
+ 
+     public static void main(String[] args) {
+         SpringApplication.run(MarketplaceServiceApplication.class, args);
+     }
+-
++    @Bean
++    public Docket api() {
++        return new Docket(DocumentationType.SWAGGER_2)
++                .select()
++                .paths(PathSelectors.ant("/*"))
++                .apis(RequestHandlerSelectors.basePackage("com.mapsa.marketplace")).build();
++    }
++    @Bean
++    public LinkDiscoverers discoverers() {
++        List<LinkDiscoverer> plugins = new ArrayList<>();
++        plugins.add(new CollectionJsonLinkDiscoverer());
++        return new LinkDiscoverers(SimplePluginRegistry.create(plugins));
++    }
+ }
